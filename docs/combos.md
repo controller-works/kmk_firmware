@@ -14,15 +14,19 @@ corresponding handlers.
 
 Combos may overlap, i.e. share match keys amongst each other.
 
-The optional arguments `timeout` and `per_key_timeout` define the time window
-within which the match has to happen and whether the timeout is renewed after
-each key press, respectively. These can be customized for every combo
-individually.
-
 ## Keycodes
 |New Keycode |Description                                         |
 |------------|----------------------------------------------------|
 |`KC.LEADER` | a dummy / convenience key for leader key sequences |
+
+## Custom Combo Behavior
+Optional arguments that customize individual combos:
+* `fast_reset`: If True, allows tapping every key (default for sequences);
+   if False, allows holding at least one key and tapping the rest to repeatedly
+   activate the combo (default for chords).
+* `per_key_timeout`: If True, reset timeout on every key press (default for
+  sequences).
+* `timeout`: Set the time window within which the match has to happen in ms.
 
 ## Example Code
 ```python
@@ -37,9 +41,9 @@ make_key(
 )
 
 combos.combos = [
-    Chord((KC.A, KC.B), KC.LSFT)
-    Chord((KC.A, KC.B, KC.C), KC.LALT)
-    Sequence((KC.LEADER, KC.A, KC.B), KC.C)
-    Sequence((KC.E, KC.F) KC.MYKEY, timeout=500, per_key_timeout=False)
+    Chord((KC.A, KC.B), KC.LSFT),
+    Chord((KC.A, KC.B, KC.C), KC.LALT),
+    Sequence((KC.LEADER, KC.A, KC.B), KC.C),
+    Sequence((KC.E, KC.F), KC.MYKEY, timeout=500, per_key_timeout=False, fast_reset=False)
 ]
 ```

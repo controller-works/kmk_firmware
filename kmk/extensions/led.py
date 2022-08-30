@@ -24,6 +24,7 @@ class LED(Extension):
     def __init__(
         self,
         led_pin,
+        brightness=50,
         brightness_step=5,
         brightness_limit=100,
         breathe_center=1.5,
@@ -45,7 +46,7 @@ class LED(Extension):
                 'Unable to create pwmio.PWMOut() instance with provided led_pin'
             )
 
-        self._brightness = 0
+        self._brightness = brightness
         self._pos = 0
         self._effect_init = False
         self._enabled = True
@@ -90,7 +91,7 @@ class LED(Extension):
         )
 
     def __repr__(self):
-        return 'LED({})'.format(self._to_dict())
+        return f'LED({self._to_dict()})'
 
     def _to_dict(self):
         return {
